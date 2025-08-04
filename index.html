@@ -178,28 +178,238 @@
             justify-content: center;
             text-align: center;
             color: var(--white-color);
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                        url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center/cover;
             padding: 0 2rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(0, 123, 255, 0.3));
+            z-index: 1;
         }
 
         .hero-content {
             max-width: 800px;
+            position: relative;
+            z-index: 3;
+            animation: heroContentFadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes heroContentFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-content h1 {
             font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.2;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            animation: typewriter 2s steps(40) 1s both;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 1.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
         }
 
         .hero-content .btn {
             margin-top: 2rem;
             font-size: 1.1rem;
             padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #0056b3);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            animation: btnBounce 1s ease-out 2s both;
+        }
+
+        @keyframes btnBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .hero-content .btn:hover {
+            background: linear-gradient(135deg, #0056b3, var(--primary-color));
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Hero Navigation */
+        .hero-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 4;
+        }
+
+        .hero-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+            border-color: white;
+        }
+
+        .hero-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Hero Arrow Navigation */
+        .hero-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            z-index: 4;
+        }
+
+        .hero-arrow:hover {
+            background: rgba(0, 123, 255, 0.6);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .hero-arrow.prev {
+            left: 30px;
+        }
+
+        .hero-arrow.next {
+            right: 30px;
+        }
+
+        /* Floating Elements */
+        .hero-floating {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 30%;
+            right: 15%;
+            animation-delay: -2s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -4s;
+        }
+
+        .floating-icon:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -1s;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.3;
+            }
         }
 
         /* --- About Section --- */
@@ -267,6 +477,30 @@
             color: white;
             font-size: 2rem;
             animation: pulse 2s infinite;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 86, 179, 0.8));
+            z-index: 1;
+        }
+
+        .feature-icon i {
+            position: relative;
+            z-index: 2;
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         @keyframes pulse {
@@ -772,9 +1006,43 @@
     <main>
         <!-- Hero Section -->
         <section id="home">
+            <!-- Hero Slider -->
+            <div class="hero-slider">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132&auto=format&fit=crop');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1594312646540-6a54684157f6?q=80&w=1964&auto=format&fit=crop');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1619547903383-b7642e37951a?q=80&w=1974&auto=format&fit=crop');"></div>
+            </div>
+
+            <!-- Floating Icons -->
+            <div class="hero-floating">
+                <div class="floating-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="floating-icon"><i class="fas fa-school"></i></div>
+                <div class="floating-icon"><i class="fas fa-book"></i></div>
+                <div class="floating-icon"><i class="fas fa-users"></i></div>
+            </div>
+
+            <!-- Hero Content -->
             <div class="hero-content">
                 <h1>Elegant, Durable & Affordable School Uniforms</h1>
-                <a href="#services" class="btn">Explore More</a>
+                <p class="hero-subtitle">Crafting premium quality school uniforms with comfort and style for over 5 years</p>
+                <a href="#services" class="btn">Explore Our Collection</a>
+            </div>
+
+            <!-- Hero Navigation Arrows -->
+            <button class="hero-arrow prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="hero-arrow next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <!-- Hero Dots Navigation -->
+            <div class="hero-nav">
+                <span class="hero-dot active" onclick="currentSlide(1)"></span>
+                <span class="hero-dot" onclick="currentSlide(2)"></span>
+                <span class="hero-dot" onclick="currentSlide(3)"></span>
+                <span class="hero-dot" onclick="currentSlide(4)"></span>
             </div>
         </section>
 
@@ -794,7 +1062,7 @@
 
                     <div class="about-features">
                         <div class="feature-card">
-                            <div class="feature-icon">
+                            <div class="feature-icon" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=400&auto=format&fit=crop');">
                                 <i class="fas fa-award"></i>
                             </div>
                             <h3>Premium Quality</h3>
@@ -802,7 +1070,7 @@
                         </div>
                         
                         <div class="feature-card">
-                            <div class="feature-icon">
+                            <div class="feature-icon" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=400&auto=format&fit=crop');">
                                 <i class="fas fa-heart"></i>
                             </div>
                             <h3>Comfort First</h3>
@@ -810,7 +1078,7 @@
                         </div>
                         
                         <div class="feature-card">
-                            <div class="feature-icon">
+                            <div class="feature-icon" style="background-image: url('https://images.unsplash.com/photo-1560472355-536de3962603?q=80&w=400&auto=format&fit=crop');">
                                 <i class="fas fa-users"></i>
                             </div>
                             <h3>Expert Service</h3>
@@ -855,7 +1123,7 @@
                     <!-- Service Card 1 -->
                     <div class="service-card">
                         <div class="service-badge">Popular</div>
-                        <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1594312646540-6a54684157f6?q=80&w=400&auto=format&fit=crop');"></div>
+                        <div class="service-image" style="background-image: url('https://5.imimg.com/data5/SELLER/Default/2024/11/463507841/BY/EC/WD/210216328/kids-school-uniforms-500x500.jpg');"></div>
                         <div class="icon"><i class="fas fa-male"></i></div>
                         <h3>Boys Uniforms</h3>
                         <p>Smart and sturdy uniforms for boys, from shirts and trousers to blazers. Designed for active school life with comfort and durability in mind.</p>
@@ -863,7 +1131,7 @@
                     <!-- Service Card 2 -->
                     <div class="service-card">
                         <div class="service-badge">Trending</div>
-                        <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1619547903383-b7642e37951a?q=80&w=400&auto=format&fit=crop');"></div>
+                        <div class="service-image" style="background-image: url('https://5.imimg.com/data5/SELLER/Default/2021/1/KT/TG/XK/4338449/primary-girls-uniform.jpeg');"></div>
                         <div class="icon"><i class="fas fa-female"></i></div>
                         <h3>Girls Uniforms</h3>
                         <p>Elegant and comfortable uniforms for girls, including skirts, blouses, and tunics. Crafted with attention to style and comfort.</p>
@@ -871,7 +1139,7 @@
                     <!-- Service Card 3 -->
                     <div class="service-card">
                         <div class="service-badge">Light</div>
-                        <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=400&auto=format&fit=crop');"></div>
+                        <div class="service-image" style="background-image: url('https://cdn.create.vista.com/downloads/b0cd4478-2364-44b6-ad31-d798f5336180_640.jpeg');"></div>
                         <div class="icon"><i class="fas fa-sun"></i></div>
                         <h3>Summer Collection</h3>
                         <p>Lightweight and breathable fabrics perfect for the warmer school months. Keep cool while looking smart and professional.</p>
@@ -879,7 +1147,7 @@
                     <!-- Service Card 4 -->
                     <div class="service-card">
                         <div class="service-badge">Warm</div>
-                        <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=400&auto=format&fit=crop');"></div>
+                        <div class="service-image" style="background-image: url('https://image.made-in-china.com/202f0j00ArabSqJPETzN/Classic-Academy-Boys-Autumn-School-Uniform-Set.webp');"></div>
                         <div class="icon"><i class="fas fa-snowflake"></i></div>
                         <h3>Winter Collection</h3>
                         <p>Warm and cozy sweaters, jackets, and accessories for the chilly season. Stay comfortable during colder school days.</p>
@@ -894,22 +1162,22 @@
                 <h2 class="section-title">Our Gallery</h2>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" alt="Students in uniform">
+                        <img src="https://www.timeforkids.com/wp-content/uploads/2019/11/TFK_1206_007.jpg" alt="Students in uniform">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132&auto=format&fit=crop" alt="Students in a classroom">
+                        <img src="https://live-production.wcms.abc-cdn.net.au/d8c8546d4ce37ac75f9366cb9aacd7d1?impolicy=wcms_crop_resize&cropH=2813&cropW=5000&xPos=0&yPos=368&width=862&height=485" alt="Students in a classroom">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1619547903383-b7642e37951a?q=80&w=1974&auto=format&fit=crop" alt="Girl in school uniform">
+                        <img src="https://www.globaluniforms.co.in/images/products/school-girls-uniform.jpg" alt="Girl in school uniform">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1594312646540-6a54684157f6?q=80&w=1964&auto=format&fit=crop" alt="Boy in school uniform">
+                        <img src="https://www.challneyboys.co.uk/i/SB1_9478.jpg" alt="Boy in school uniform">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?q=80&w=1974&auto=format&fit=crop" alt="Children in art class">
+                        <img src="https://www.nafa.edu.sg/images/default-source/corp-images/courses/junior-art/ja-children-art-1-thumbnail.jpg?sfvrsn=965ac9b2_2" alt="Children in art class">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1503944583220-79d8c835b9df?q=80&w=2070&auto=format&fit=crop" alt="Students running outdoors">
+                        <img src="https://www.shutterstock.com/image-photo/group-image-asian-children-having-600nw-2335173819.jpg" alt="Students running outdoors">
                     </div>
                 </div>
             </div>
@@ -946,6 +1214,49 @@
             const sections = document.querySelectorAll('.section');
             const navToggle = document.querySelector('.nav-toggle');
             const navMenu = document.querySelector('.nav-menu');
+
+            // --- Hero Slider Functionality ---
+            let currentSlideIndex = 0;
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                // Remove active class from all slides and dots
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                // Add active class to current slide and dot
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+
+            function nextSlide() {
+                currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+                showSlide(currentSlideIndex);
+            }
+
+            function prevSlide() {
+                currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlideIndex);
+            }
+
+            // Auto slide functionality
+            setInterval(nextSlide, 2500); // Change slide every 2.5 seconds
+
+            // Global functions for navigation
+            window.changeSlide = function(direction) {
+                if (direction === 1) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            };
+
+            window.currentSlide = function(index) {
+                currentSlideIndex = index - 1;
+                showSlide(currentSlideIndex);
+            };
 
             // --- Mobile Navigation Toggle ---
             navToggle.addEventListener('click', () => {
