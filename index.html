@@ -1242,7 +1242,7 @@
             }
 
             // Auto slide functionality
-            setInterval(nextSlide, 2500); // Change slide every 2.5 seconds
+            setInterval(nextSlide, 2100); // Change slide every 2.5 seconds
 
             // Global functions for navigation
             window.changeSlide = function(direction) {
@@ -1288,7 +1288,7 @@
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.6
+                threshold: 0.3
             };
 
             const observer = new IntersectionObserver((entries) => {
